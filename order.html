@@ -1,0 +1,443 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order | NIXXMOTOAXX</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PyScript -->
+    <link rel="stylesheet"
+          href="https://pyscript.net/releases/2025.2.2/core.css">
+
+    <script type="module"
+            src="https://pyscript.net/releases/2025.2.2/core.js">
+    </script>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         NAVIGATION
+         ===================================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                NIXXMOTOAXX
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="products.html">Products</a>
+                </li>
+
+                <li>
+                    <a href="order.html">Order</a>
+                </li>
+
+                <li>
+                    <a href="about.html">About</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">Contact</a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================
+         ORDER SECTION
+         ===================================== -->
+
+    <main>
+
+        <section class="order-section">
+
+            <div class="order-container">
+
+                <h1>
+                    Place Your Order
+                </h1>
+
+                <p>
+                    Choose your motorcycle accessory
+                    and enter the quantity you want.
+                </p>
+
+
+                <!-- =====================================
+                     ORDER FORM
+                     ===================================== -->
+
+                <form id="orderForm"
+                      class="order-form">
+
+
+                    <!-- CUSTOMER NAME -->
+
+                    <div>
+
+                        <label for="customerName">
+                            Customer Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customerName"
+                            placeholder="Enter your name"
+                            required>
+
+                    </div>
+
+
+                    <!-- PRODUCT -->
+
+                    <div>
+
+                        <label for="product">
+                            Select Product
+                        </label>
+
+                        <select id="product">
+
+                            <option value="350">
+                                Motorcycle Phone Holder - ₱350
+                            </option>
+
+                            <option value="850">
+                                LED Auxiliary Light - ₱850
+                            </option>
+
+                            <option value="600">
+                                Motorcycle Rear View Mirror - ₱600
+                            </option>
+
+                            <option value="450">
+                                Riding Gloves - ₱450
+                            </option>
+
+                            <option value="1800">
+                                Motorcycle Top Box - ₱1,800
+                            </option>
+
+                            <option value="1200">
+                                Universal Crash Guard - ₱1,200
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- QUANTITY -->
+
+                    <div>
+
+                        <label for="quantity">
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            min="1"
+                            value="1"
+                            required>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         CALCULATE BUTTON
+                         ===================================== -->
+
+                    <button
+                        type="button"
+                        id="calculateButton"
+                        class="button">
+
+                        Calculate Total
+
+                    </button>
+
+
+                    <!-- TOTAL -->
+
+                    <div class="total-box">
+
+                        <h2 id="total">
+                            Total: ₱0
+                        </h2>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         PLACE ORDER BUTTON
+                         ===================================== -->
+
+                    <button
+                        type="submit"
+                        class="button">
+
+                        Place Order
+
+                    </button>
+
+
+                    <!-- =====================================
+                         CLEAR BUTTON
+                         ===================================== -->
+
+                    <button
+                        type="button"
+                        id="clearButton"
+                        class="button">
+
+                        Clear Order
+
+                    </button>
+
+
+                    <!-- ORDER MESSAGE -->
+
+                    <div
+                        id="orderMessage"
+                        class="message">
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================
+         FOOTER
+         ===================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 NIXXMOTOAXX. All Rights Reserved.
+        </p>
+
+        <p>
+            Motorcycle Accessories for Every Rider.
+        </p>
+
+    </footer>
+
+
+    <!-- =====================================
+         PYSCRIPT / EVENT-DRIVEN PROGRAMMING
+         ===================================== -->
+
+    <script type="py">
+
+from pyscript import document
+
+
+# ==========================================
+# PRODUCT PRICES
+# ==========================================
+
+product_prices = {
+    "350": 350,
+    "850": 850,
+    "600": 600,
+    "450": 450,
+    "1800": 1800,
+    "1200": 1200
+}
+
+
+# ==========================================
+# PRODUCT NAMES
+# ==========================================
+
+product_names = {
+    "350": "Motorcycle Phone Holder",
+    "850": "LED Auxiliary Light",
+    "600": "Motorcycle Rear View Mirror",
+    "450": "Riding Gloves",
+    "1800": "Motorcycle Top Box",
+    "1200": "Universal Crash Guard"
+}
+
+
+# ==========================================
+# CALCULATE TOTAL
+# CLICK EVENT
+# ==========================================
+
+def calculate_total(event):
+
+    product = document.querySelector("#product")
+
+    quantity_input = document.querySelector("#quantity")
+
+    total_display = document.querySelector("#total")
+
+
+    price = float(product.value)
+
+    quantity = int(quantity_input.value)
+
+
+    total = price * quantity
+
+
+    total_display.innerText = f"Total: ₱{total:,.2f}"
+
+
+# ==========================================
+# PLACE ORDER
+# FORM SUBMISSION EVENT
+# ==========================================
+
+def place_order(event):
+
+    event.preventDefault()
+
+
+    customer_name = document.querySelector(
+        "#customerName"
+    ).value
+
+
+    product = document.querySelector(
+        "#product"
+    )
+
+
+    quantity = document.querySelector(
+        "#quantity"
+    ).value
+
+
+    total_display = document.querySelector(
+        "#total"
+    )
+
+
+    message = document.querySelector(
+        "#orderMessage"
+    )
+
+
+    selected_product = product_names[
+        product.value
+    ]
+
+
+    total = total_display.innerText
+
+
+    message.innerText = (
+        f"Thank you, {customer_name}! "
+        f"Your order for {quantity} item(s) "
+        f"of {selected_product} "
+        f"has been received. "
+        f"{total}"
+    )
+
+
+# ==========================================
+# CLEAR ORDER
+# CLICK EVENT
+# ==========================================
+
+def clear_order(event):
+
+    document.querySelector(
+        "#customerName"
+    ).value = ""
+
+
+    document.querySelector(
+        "#product"
+    ).selectedIndex = 0
+
+
+    document.querySelector(
+        "#quantity"
+    ).value = 1
+
+
+    document.querySelector(
+        "#total"
+    ).innerText = "Total: ₱0"
+
+
+    document.querySelector(
+        "#orderMessage"
+    ).innerText = ""
+
+
+# ==========================================
+# CONNECT EVENTS
+# ==========================================
+
+calculate_button = document.querySelector(
+    "#calculateButton"
+)
+
+
+order_form = document.querySelector(
+    "#orderForm"
+)
+
+
+clear_button = document.querySelector(
+    "#clearButton"
+)
+
+
+# Button click event
+
+calculate_button.onclick = calculate_total
+
+
+# Form submission event
+
+order_form.onsubmit = place_order
+
+
+# Clear button click event
+
+clear_button.onclick = clear_order
+
+    </script>
+
+
+</body>
+
+</html>
